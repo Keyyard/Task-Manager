@@ -18,7 +18,7 @@ read_tasks_from_file()
 
 layout = [
     [sg.InputText(key='task_input', expand_x=True), sg.Button("Add")],
-    [sg.Text("Current tasks:")],
+    [sg.Text("Current tasks:",background_color=None, expand_x=True)],
     [sg.Listbox(values=tasks, expand_x=True, expand_y=True, key='task_list')],
     [sg.Button("Remove Selected Task(s)", expand_x=True, size=(20, 1))],
     [sg.Button("Exit")]
