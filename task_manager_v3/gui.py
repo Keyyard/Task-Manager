@@ -12,12 +12,25 @@ from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"D:\PyPractice\Task Manager\Task_Manager_V3\assets\frame0")
+TASKS_FILE = OUTPUT_PATH / "tasks.txt"
+
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
+def save_tasks_to_file():
+    with open(TASKS_FILE, 'w') as file:
+        for task in tasks:
+            file.write(task + '\n')
+
+def load_tasks_from_file():
+    if TASKS_FILE.exists():
+        with open(TASKS_FILE, 'r') as file:
+            return [line.strip() for line in file]
+    return []
 
 window = Tk()
 tasks = []
+tasks = load_tasks_from_file()
 window.geometry("570x452")
 window.configure(bg = "#99D67D")
 
@@ -142,12 +155,15 @@ def add():
     if task != '':
         tasks.append(task)
         entry_1.delete(0, 'end')
+        save_tasks_to_file()
         board_update()
 
 def remove():
-    tasks.pop(0)
-    tasks.sort()
-    board_update()
+    if tasks:
+        tasks.pop(0)
+        tasks.sort()
+        save_tasks_to_file()
+        board_update()
 
 board_update()
 
